@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TodoList Alpine.js</title>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="app.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container" x-data="todoList()">
+        <h1>TodoList</h1>
+        <form class="todo-input" @submit.prevent="addTask">
+            <input
+                type="text"
+                x-model="newTask"
+                placeholder="Ajouter une tâche..."
+                required
+            />
+            <button type="submit">Ajouter</button>
+        </form>
+        <ul class="task-list">
+            <template x-for="task in tasks" :key="task.id">
+                <li
+                    class="task-item"
+                    :class="{ 'completed': task.completed }"
+                >
+                    <button
+                        class="complete-btn"
+                        @click="toggleTask(task.id)"
+                        x-text="task.completed ? '✓' : '○'"
+                    ></button>
+                    <span class="task-text" x-text="task.text"></span>
+                    <button
+                        class="delete-btn"
+                        @click="deleteTask(task.id)"
+                    >×</button>
+                </li>
+            </template>
+        </ul>
+    </div>
+
+    <!-- <script>
+        function todoList() {
+            return {
+                tasks: JSON.parse(localStorage.getItem('tasks') || '[]'),
+                newTask: '',
+
+                addTask() {
+                    if (this.newTask.trim()) {
+                        this.tasks.push({
+                            id: Date.now(),
+                            text: this.newTask.trim(),
+                            completed: false
+                        });
+                        this.newTask = '';
+                        this.saveTasks();
+                    }
+                },
+
+                deleteTask(id) {
+                    this.tasks = this.tasks.filter(task => task.id !== id);
+                    this.saveTasks();
+                },
+
+                toggleTask(id) {
+                    this.tasks = this.tasks.map(task => 
+                        task.id === id ? { ...task, completed: !task.completed } : task
+                    );
+                    this.saveTasks();
+                },
+
+                saveTasks() {
+                    localStorage.setItem('tasks', JSON.stringify(this.tasks));
+                }
+            }
+        }
+    </script> -->
+</body>
+</html> 

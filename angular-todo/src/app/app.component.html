@@ -1,0 +1,35 @@
+<div class="container">
+  <h1>TodoList</h1>
+  <form class="todo-input" (ngSubmit)="addTask()">
+    <input
+      type="text"
+      [(ngModel)]="newTask"
+      name="newTask"
+      placeholder="Ajouter une tâche..."
+    />
+    <button type="submit">Ajouter</button>
+  </form>
+  <ul class="task-list">
+    <li
+      *ngFor="let task of tasks"
+      class="task-item"
+      [class.completed]="task.completed"
+    >
+      <button
+        class="complete-btn"
+        (click)="toggleTask(task.id)"
+      >
+        {{ task.completed ? '✓' : '○' }}
+      </button>
+      <span class="task-text">{{ task.text }}</span>
+      <button
+        class="delete-btn"
+        (click)="deleteTask(task.id)"
+      >
+        ×
+      </button>
+    </li>
+  </ul>
+</div>
+
+
